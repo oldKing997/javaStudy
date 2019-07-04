@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="JavaStudy:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JavaStudy_jar</output-path>
+    <root id="archive" name="JavaStudy.jar">
+      <element id="module-output" name="JavaStudy" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-lang3/3.6/commons-lang3-3.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/alibaba/fastjson/1.1.41/fastjson-1.1.41.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
