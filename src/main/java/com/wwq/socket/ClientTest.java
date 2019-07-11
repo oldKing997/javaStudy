@@ -4,7 +4,7 @@ import com.wwq.socket.client.Client;
 
 public class ClientTest {
     public static void main(String[] args) {
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 1; i++) {
             new Thread() {
                 @Override
                 public void run() {

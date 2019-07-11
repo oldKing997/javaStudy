@@ -4,14 +4,13 @@ import com.wwq.date.DateUtils;
 import com.wwq.socket.ThreadPool;
 
 import java.io.IOException;
-import java.net.BindException;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Socket服务端
+ *
  * @author wwq
  * @date 2019年6月26日 11:25:49
  */
@@ -33,15 +32,16 @@ public class Server {
     {
         port = 8888;
         clientSockets = new ArrayList();
-        serverThreads=new ArrayList();
+        serverThreads = new ArrayList();
         ServerFlag = true;
         System.out.println(serverPrintString("初始化"));
     }
 
-    void initPool(){
-        savePool=new ThreadPool(32);
-        serverPool=new ThreadPool(32);
+    void initPool() {
+        savePool = new ThreadPool(32);
+        serverPool = new ThreadPool(32);
     }
+
     /**
      * 使用默认端口号进行直接启动
      */
@@ -67,33 +67,34 @@ public class Server {
     public void startServer() {
         try {
             serverSocket = new ServerSocket(this.port);
-            System.out.println(serverPrintString("服务器已启动，端口号为:" + this.port));
+            String localAddress = InetAddress.getLocalHost().getHostAddress();
+            System.out.println(serverPrintString(localAddress + "服务器已启动，端口号为:" + this.port));
             initPool();
             while (ServerFlag) {
                 Socket socket = serverSocket.accept();
 //                开始监听连接，有连接时将会创建一个Socket
                 clientSockets.add(socket);
 //                将客户端Socket放到一个List中
-                ServerThread serverThread=new ServerThread(socket,savePool);
+                ServerThread serverThread = new ServerThread(socket, savePool);
                 serverPool.add(serverThread);
 //                Thread thread = new Thread(serverThread, "socket" + socket.getInetAddress().toString());
 ////                为连接建立一个单独的线程进行处理
 //                thread.start();
             }
             System.out.println(serverPrintString("服务器已退出。"));
-        } catch (BindException e){
+        } catch (BindException e) {
             System.out.println(serverPrintString("端口号被占用"));
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             try {
-                if(serverSocket!=null&&!serverSocket.isClosed()){
+                if (serverSocket != null && !serverSocket.isClosed()) {
                     serverSocket.close();
                 }
                 System.gc();
-            }catch (Exception e) {
-               e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

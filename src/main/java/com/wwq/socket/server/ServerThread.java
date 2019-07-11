@@ -42,12 +42,10 @@ public class ServerThread implements Runnable {
         try {
             String s;
             System.out.println(Server.serverPrintString("有新的连接加入,Ip为:" + this.clientIp + "\t开启线程进行交互"));
-//            send("服务器返回给你");
             while (socket.isConnected() && !socket.isClosed() && (s = br.readLine()) != null) {
                 JSONObject retJSON = new JSONObject();
                 try {
-                    String saveImgUrl = "/ssd/img/realImg/";
-
+                    String saveImgUrl = "/ssd/realImg/";
 
                     JSONObject data = JSONObject.parseObject(s);
                     final String img = data.getString("img");
@@ -57,7 +55,7 @@ public class ServerThread implements Runnable {
                     Runnable runnable=new Runnable() {
                         @Override
                         public void run() {
-//                            FileUtils.base64ToFile(img, savePath, time + ".jpg");
+                            FileUtils.base64ToFile(img, savePath, time + ".jpg");
                         }
                     };
                     pool.add(runnable);
@@ -114,6 +112,6 @@ public class ServerThread implements Runnable {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        System.out.println(Server.serverPrintString("触发JAVA GC。"));
+        System.out.println(Server.serverPrintString("触发JAVA GC"));
     }
 }
